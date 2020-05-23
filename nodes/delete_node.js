@@ -1,7 +1,7 @@
 module.exports = function (RED) {
   'use strict';
 
-  const { WazoApiClient } = require('@wazo/sdk');
+  //const { WazoApiClient } = require('@wazo/sdk');
   
   function setProperty(node, msg, name, type, value) {
       if (type === 'msg') {
@@ -50,15 +50,15 @@ module.exports = function (RED) {
     let node = this;
     setStatus(node);
 
-    node.callnode = n.callnode;
-    node.callnodeType = n.callnodeType;
+    node.applicationUuid = n.applicationUuid;
+    node.applicationType = n.applicationType;
 
     node.on('input', async (msg, send, done) => {
       setStatus(node, "running");
 
-      let callnode = RED.util.evaluateNodeProperty(node.callnode, node.callnodeType, node, msg);
-      const node_uuid = callnode.node_uuid || callnode.uuid;
-      const application_uuid = callnode.application_uuid;
+      let applicationUuid = RED.util.evaluateNodeProperty(node.applicationUuid, node.applicationType, node, msg);
+      const node_uuid = applicationUuid.node_uuid || applicationUuid.uuid; //msg.payload.node_uuid || msg.payload.uuid
+      const application_uuid = applicationUuid.application_uuid;
 
       try { 
         checkType(node, node_uuid, "string");
@@ -74,7 +74,7 @@ module.exports = function (RED) {
           const result = await node.client.removeNode(application_uuid, node_uuid);         
           node.log(result);
           setStatus(node, `Last deleted: ${node_uuid}`, "green", "dot");
-          setProperty(node, msg, node.callnode, node.callnodeType, result);
+          setProperty(node, msg, node.applicationUuid, node.applicationType, result);
         }
         catch(err) {        
           done(err);
@@ -83,6 +83,9 @@ module.exports = function (RED) {
         if (done) {            
           done();          
         }
+      }
+      else {
+        throw new Error("not yet implemented")
       }
     });
 

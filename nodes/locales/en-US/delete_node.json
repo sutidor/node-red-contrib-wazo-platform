@@ -2,7 +2,8 @@
     "delete_node": {
         "label": {
             "name": "Name",
-            "callnode": "Input"
+            "applicationUuid": "Application UUID",
+            "nodeUuid": "Node UUID"
         },
         "errors": {
             "falsetype": "Input is not of type "

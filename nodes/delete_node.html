@@ -7,11 +7,11 @@
         type: "wazo config", 
         required: true
       },
-      callnode:  {
+      applicationUuid:  {
         value: '',
         required: true
       },
-      callnodeType: {
+      applicationType: {
         value: 'msg',
         required: true
       },
@@ -22,9 +22,13 @@
     label: "delete node",
     paletteLabel: "delete node",
     oneditprepare: function() {
-            $('#node-input-callnode').typedInput({
+            $('#node-input-applicationUuid').typedInput({
                 types: ['msg', 'flow', 'global'],
-                typeField: $('#node-input-callnodeType')
+                typeField: $('#node-input-applicationType')
+            });
+            $('#node-input-nodeUuid').typedInput({
+                types: ['msg', 'flow', 'global'],
+                typeField: $('#node-input-nodeType')
             });
     }
   });
@@ -36,9 +40,14 @@
     <input type="text" id="node-input-server">
   </div>
   <div class="form-row">
-    <label for="node-input-callnode"><i class="fa fa-play"></i> <span data-i18n="delete_node.label.callnode"></span></label>
-    <input type="text" id="node-input-callnode" data-i18n="[placeholder]delete_node.label.callnode" style="width: 300px;">
-    <input type="hidden" id="node-input-callnodeType">
+    <label for="node-input-applicationUuid"><i class="fa fa-play"></i> <span data-i18n="delete_node.label.applicationUuid"></span></label>
+    <input type="text" id="node-input-applicationUuid" data-i18n="[placeholder]delete_node.label.applicationUuid" style="width: 300px;">
+    <input type="hidden" id="node-input-applicationType">
+</div>
+<div class="form-row">
+    <label for="node-input-nodeUuid"><i class="fa fa-play"></i> <span data-i18n="delete_node.label.nodeUuid"></span></label>
+    <input type="text" id="node-input-nodeUuid" data-i18n="[placeholder]delete_node.label.nodeUuid" style="width: 300px;">
+    <input type="hidden" id="node-input-nodeType">
 </div>
 </script>
 
