@@ -21,7 +21,7 @@ module.exports = function (RED) {
           msg.payload.call_id = call_id;
           msg.payload.application_uuid = application_uuid;
           msg.payload.playback_uuid = result.uuid;
-          msg.payload.data = result;
+          //msg.payload.data = result;
           node.send(msg);
         }
         catch(err) {

@@ -16,6 +16,8 @@ module.exports = function (RED) {
           const snoopNode = await node.client.listSnoop(application_uuid);
           node.log('List snoop');
           msg.payload.application_uuid = application_uuid;
+          msg.payload.snoop_uuid = snoopNode.items[0].uuid;
+          msg.payload.whisper_mode = snoopNode.items[0].whisper_mode;
           msg.payload.data = snoopNode;
           node.send(msg);
         }

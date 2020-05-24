@@ -55,6 +55,7 @@ module.exports = function (RED) {
         if (options.method == 'PUT' || options.method == 'DELETE') {
           return null;
         }
+        console.log("RETURN PASSSSSS NULL");
         const contentType = response.headers.get('content-type') || '';
         const isJson = contentType.indexOf('application/json') !== -1;
         return isJson ? response.json() : response.text(); 
