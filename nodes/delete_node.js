@@ -1,19 +1,7 @@
 module.exports = function (RED) {
   'use strict';
 
-  //const { WazoApiClient } = require('@wazo/sdk');
-  
-  function setProperty(node, msg, name, type, value) {
-      if (type === 'msg') {
-          msg[name] = value;
-      } else if (type === 'flow') {
-          node.context().flow.set(name, value);
-      } else if (type === 'global') {
-          node.context().global.set(name, value);
-      }
-  }
-
-  function sendErrorMessage(node, text) {
+  function setErrorStatus(node, text) {
       node.status({
           fill: 'red',
           shape: 'ring',
@@ -28,7 +16,7 @@ module.exports = function (RED) {
       node.status({
         fill: color || 'blue',
         shape: shape || 'ring',
-        text: text
+        text: text || ''
       });
     }
   }
@@ -36,61 +24,58 @@ module.exports = function (RED) {
   function checkType(node, parameter, type) {
     if (typeof parameter !== type) {
       const text = RED._('delete_node.errors.falsetype') + type;
-      sendErrorMessage(node, text);
-      throw(text);
+      setErrorStatus(node, text);
+      throw new Error(text);
     }
   }
 
-
-  function delete_node(n) {
-    RED.nodes.createNode(this, n);
-    conn = RED.nodes.getNode(n.server);
+  function delete_node(config) {
+    RED.nodes.createNode(this, config);
+    conn = RED.nodes.getNode(config.server);
     this.client = conn.client.application;
-    
+
     let node = this;
     setStatus(node);
-
-    node.applicationUuid = n.applicationUuid;
-    node.applicationType = n.applicationType;
 
     node.on('input', async (msg, send, done) => {
       setStatus(node, "running");
 
-      let applicationUuid = RED.util.evaluateNodeProperty(node.applicationUuid, node.applicationType, node, msg);
-      const node_uuid = applicationUuid.node_uuid || applicationUuid.uuid; //msg.payload.node_uuid || msg.payload.uuid
-      const application_uuid = applicationUuid.application_uuid;
+      console.log(msg.payload.application_uuid)
 
-      try { 
-        checkType(node, node_uuid, "string");
-        checkType(node, application_uuid, "string");
-      } catch (err) {
-        done(err);
-        return;
-      }
+      applicationUuid = config.applicationUuid || msg.payload.application_uuid;
+      nodeUuid = config.nodeUuidnode || msg.payload.node_uuid;
 
-      if (node_uuid && application_uuid) {
+      checkType(node, nodeUuid, "string");
+      checkType(node, applicationUuid, "string");  
+
+      console.log(applicationUuid)
+      
+      console.log(nodeUuid, applicationUuid)
+
+      if (nodeUuid && applicationUuid) {
         node.log("Delete node");
         try {
-          const result = await node.client.removeNode(application_uuid, node_uuid);         
-          node.log(result);
-          setStatus(node, `Last deleted: ${node_uuid}`, "green", "dot");
-          setProperty(node, msg, node.applicationUuid, node.applicationType, result);
+          const deletedNode = await node.client.removeNode(applicationUuid, nodeUuid);         
+          node.log(deletedNode);
+          setStatus(node, `Last deleted: ${nodeUuid}`, "green", "dot");
+          msg.payload.application_uuid = applicationUuid;
+          msg.payload.node_uuid = nodeUuid;
+          msg.payload.deletedNode = deleteNode;
+          node.send(msg);  
         }
         catch(err) {        
-          done(err);
-        } 
-        send(msg);
-        if (done) {            
-          done();          
-        }
+          node.error(err);
+          throw err
+        }             
+        node.done();      
       }
       else {
-        throw new Error("not yet implemented")
+        const err = new Error("No Application UUID or Node UUID provided throw workflow msg or input field")
+        node.error(err);
+        throw err;
       }
     });
-
   }
 
   RED.nodes.registerType("wazo delete_node", delete_node);
-
 };
