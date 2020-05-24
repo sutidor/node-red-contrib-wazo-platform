@@ -40,7 +40,7 @@ module.exports = function (RED) {
     node.on('input', async (msg, send, done) => {
       setStatus(node, "running");
 
-      console.log(msg.payload.application_uuid)
+      node.log(msg.payload.application_uuid)
 
       applicationUuid = config.applicationUuid || msg.payload.application_uuid;
       nodeUuid = config.nodeUuidnode || msg.payload.node_uuid;
@@ -48,9 +48,9 @@ module.exports = function (RED) {
       checkType(node, nodeUuid, "string");
       checkType(node, applicationUuid, "string");  
 
-      console.log(applicationUuid)
+      node.log(applicationUuid)
       
-      console.log(nodeUuid, applicationUuid)
+      node.log(nodeUuid, applicationUuid)
 
       if (nodeUuid && applicationUuid) {
         node.log("Delete node");
