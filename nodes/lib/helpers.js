@@ -6,7 +6,7 @@ module.exports = {
 			text: typeof text === "object" ? JSON.stringify(text) : text,
 		});
 	},
-
+//ToDo
 	setStatus: (node, text, color, shape) => {
 		if (!text && !color && !shape) {
 			node.status({});
@@ -18,11 +18,27 @@ module.exports = {
 			});
 		}
 	},
-
-	checkType: (node, parameter, type) => {
+//ToDo
+	checkType: (RED, node, parameter, type) => {
 		if (typeof parameter !== type) {
-			const text = RED._("delete_node.errors.falsetype") + type;
-			setErrorStatus(node, text);
+			const errorText = RED._("delete_node.errors.falsetype") + type + ", but: " + typeof(parameter);
+			node.status({
+				fill: "red",
+				shape: "ring",
+				text: errorText,
+			});
+			node.log(errorText);
+			node.error(errorText);
+			return false;
 		}
+		return true;
 	},
+
+	getNodeParameter: (RED, node, msg, field, fieldType) => {
+		if(field) {
+			return RED.util.evaluateNodeProperty(field, fieldType, node, msg);
+		} else {
+			return undefined;
+		}
+	}
 };

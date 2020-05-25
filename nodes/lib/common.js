@@ -1,5 +1,12 @@
 $(() => {
 
+  appendInputType = (name) => {
+    $(`#node-input-${name}`).typedInput({
+      types: ['msg', 'flow', 'global'],
+      typeField: $(`#node-input-${name}Type`)
+    });
+  }
+
   appendOption = (id, value, text, data_id, data_value, selected) => {
     var select_menu = $(`#${id}`);
     var option = $('<option>', {
