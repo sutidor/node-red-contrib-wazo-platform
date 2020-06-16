@@ -1,0 +1,18 @@
+{
+    "new_call": {
+        "label": {
+            "name": "Name",
+            "applicationUuid": "Application UUID",
+            "nodeUuid": "Node UUID",
+            "exten": "Extension",
+            "context": "Context",
+            "autoAnswer": "AutoAnswer",
+            "displayedCallerIdName": "DisplayedCallerIdName",
+            "displayedCallerIdNumber": "DisplayedCallerIdNumber",
+            "variables": "Variables"
+        },
+        "errors": {
+            "falsetype": "Input is not of type "
+        }
+    }
+}

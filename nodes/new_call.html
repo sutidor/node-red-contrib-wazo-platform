@@ -13,15 +13,14 @@
     label: "new call",
     paletteLabel: "new call",
     oneditprepare: function() { 
-      $("document").ready(() => {
-        $('#node-input-server').change(() => {
-          const server_id = $('#node-input-server option:selected').val();
-          conn = RED.nodes.node(server_id);
-          if (conn) {
-            listWazoApplications(conn, this.app_uuid);
-          }
-        });
-      });
+            appendInputType("applicationUuid");
+            appendInputType("nodeUuid");
+            appendInputType("exten");
+            appendInputType("context");
+            appendInputType("autoAnswer");
+            appendInputType("displayedCallerIdName");
+            appendInputType("displayedCallerIdNumber");
+            appendInputType("variables");
     }
   });
 </script>
@@ -31,15 +30,40 @@
     <label for="node-config-input-server"><i class="fa fa-globe"></i> Server</label>
     <input type="text" id="node-input-server">
   </div>
-
   <div class="form-row">
-    <label for="node-config-input-app_name"><i class="fa fa-code"></i> Name</label>
-    <select id="node-input-app_name" style="width:70%;"></select>
+    <label for="node-input-applicationUuid"><i class="fa fa-play"></i> <span data-i18n="new_call.label.applicationUuid"></span></label>
+    <input type="text" id="node-input-applicationUuid" data-i18n="[placeholder]new_call.label.applicationUuid" style="width: 300px;">
+    <input type="hidden" id="node-input-applicationUuidType">
   </div>
-
   <div class="form-row">
-    <label for="node-config-input-app_uuid"><i class="fa fa-list-ol"></i> UUID</label>
-    <input type="text" id="node-input-app_uuid" placeholder="Application UUID" disabled>
+    <label for="node-input-exten"><i class="fa fa-play"></i> <span data-i18n="new_call.label.exten"></span></label>
+    <input type="text" id="node-input-exten" data-i18n="[placeholder]new_call.label.exten" style="width: 300px;">
+    <input type="hidden" id="node-input-extenType">
+  </div>
+  <div class="form-row">
+    <label for="node-input-context"><i class="fa fa-play"></i> <span data-i18n="new_call.label.context"></span></label>
+    <input type="text" id="node-input-context" data-i18n="[placeholder]new_call.label.context" style="width: 300px;">
+    <input type="hidden" id="node-input-contextType">
+  </div>
+  <div class="form-row">
+    <label for="node-input-autoAnswer"><i class="fa fa-play"></i> <span data-i18n="new_call.label.autoAnswer"></span></label>
+    <input type="boolean" id="node-input-autoAnswer" data-i18n="[placeholder]new_call.label.autoAnswer" style="width: 300px;">
+    <input type="hidden" id="node-input-autoAnswerType">
+  </div>
+  <div class="form-row">
+    <label for="node-input-displayedCallerIdName"><i class="fa fa-play"></i> <span data-i18n="new_call.label.displayedCallerIdName"></span></label>
+    <input type="text" id="node-input-displayedCallerIdName" data-i18n="[placeholder]new_call.label.displayedCallerIdName" style="width: 300px;">
+    <input type="hidden" id="node-input-displayedCallerIdNameType">
+  </div>
+  <div class="form-row">
+    <label for="node-input-displayedCallerIdNumber"><i class="fa fa-play"></i> <span data-i18n="new_call.label.displayedCallerIdNumber"></span></label>
+    <input type="text" id="node-input-displayedCallerIdNumber" data-i18n="[placeholder]new_call.label.displayedCallerIdNumber" style="width: 300px;">
+    <input type="hidden" id="node-input-displayedCallerIdNumberType">
+  </div>
+  <div class="form-row">
+    <label for="node-input-variables"><i class="fa fa-play"></i> <span data-i18n="new_call.label.variables"></span></label>
+    <input type="object" id="node-input-variables" data-i18n="[placeholder]new_call.label.variables" style="width: 300px;">
+    <input type="hidden" id="node-input-variablesType">
   </div>
 </script>
 

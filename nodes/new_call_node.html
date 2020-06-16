@@ -9,7 +9,14 @@
     outputs:1,
     icon: "wazo.png",
     label: "new call node",
-    paletteLabel: "new call node"
+    paletteLabel: "new call node",
+    oneditprepare: function() {
+            appendInputType("applicationUuid");
+            appendInputType("nodeUuid");
+            appendInputType("exten");
+            appendInputType("context");
+            appendInputType("autoAnswer");
+    }
   });
 </script>
 
@@ -17,6 +24,31 @@
   <div class="form-row">
     <label for="node-config-input-server"><i class="fa fa-globe"></i> Server</label>
     <input type="text" id="node-input-server">
+  </div>
+  <div class="form-row">
+    <label for="node-input-applicationUuid"><i class="fa fa-play"></i> <span data-i18n="new_call_node.label.applicationUuid"></span></label>
+    <input type="text" id="node-input-applicationUuid" data-i18n="[placeholder]new_call_node.label.applicationUuid" style="width: 300px;">
+    <input type="hidden" id="node-input-applicationUuidType">
+  </div>
+  <div class="form-row">
+    <label for="node-input-nodeUuid"><i class="fa fa-play"></i> <span data-i18n="new_call_node.label.nodeUuid"></span></label>
+    <input type="text" id="node-input-nodeUuid" data-i18n="[placeholder]new_call_node.label.nodeUuid" style="width: 300px;">
+    <input type="hidden" id="node-input-nodeUuidType">
+  </div>
+  <div class="form-row">
+    <label for="node-input-exten"><i class="fa fa-play"></i> <span data-i18n="new_call_node.label.exten"></span></label>
+    <input type="text" id="node-input-exten" data-i18n="[placeholder]new_call_node.label.exten" style="width: 300px;">
+    <input type="hidden" id="node-input-extenType">
+  </div>
+  <div class="form-row">
+    <label for="node-input-context"><i class="fa fa-play"></i> <span data-i18n="new_call_node.label.context"></span></label>
+    <input type="text" id="node-input-context" data-i18n="[placeholder]new_call_node.label.context" style="width: 300px;">
+    <input type="hidden" id="node-input-contextType">
+  </div>
+  <div class="form-row">
+    <label for="node-input-autoAnswer"><i class="fa fa-play"></i> <span data-i18n="new_call_node.label.autoAnswer"></span></label>
+    <input type="boolean" id="node-input-autoAnswer" data-i18n="[placeholder]new_call_node.label.autoAnswer" style="width: 300px;">
+    <input type="hidden" id="node-input-autoAnswerType">
   </div>
 </script>
 

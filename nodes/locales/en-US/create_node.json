@@ -1,0 +1,12 @@
+{
+    "create_node": {
+        "label": {
+            "name": "Name",
+            "applicationUuid": "Application UUID",
+            "callUuid": "Call UUID"
+        },
+        "errors": {
+            "falsetype": "Input is not of type "
+        }
+    }
+}

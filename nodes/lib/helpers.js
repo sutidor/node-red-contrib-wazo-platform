@@ -21,7 +21,7 @@ module.exports = {
 //ToDo
 	checkType: (RED, node, parameter, type) => {
 		if (typeof parameter !== type) {
-			const errorText = RED._("delete_node.errors.falsetype") + type + ", but: " + typeof(parameter);
+			const errorText = "Input is not of type " + type + ", but: " + typeof(parameter);
 			node.status({
 				fill: "red",
 				shape: "ring",

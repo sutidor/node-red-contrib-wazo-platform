@@ -1,4 +1,5 @@
 module.exports = function (RED) {
+  const { setStatus, checkType, setErrorStatus, getNodeParameter } = require('./lib/helpers');
   const { WazoApiClient } = require('@wazo/sdk');
   const fetch = require('node-fetch');
   const https = require("https");
@@ -7,38 +8,44 @@ module.exports = function (RED) {
     rejectUnauthorized: false
   });
     
-  function create_node(n) {
-    RED.nodes.createNode(this, n);
-    conn = RED.nodes.getNode(n.server);
-    this.refreshToken = n.refreshToken;
+  function create_node(config) {
+
+    RED.nodes.createNode(this, config);
+    conn = RED.nodes.getNode(config.server);
+    this.refreshToken = config.refreshToken;
     this.client = conn.client.application;
 
-    var node = this;
+    let node = this;
+    setStatus(node);
 
-    node.on('input', async msg => {
-      call_id = msg.payload.call ? msg.payload.call.id : msg.payload.call_id;
-      application_uuid = msg.payload.application_uuid;
+    node.on('input', async (msg, send, done) => {
+      setStatus(node, "running");
 
-      if (call_id && application_uuid) {
-        const token = await conn.authenticate();
-
-        try {
-          const url = `https://${conn.host}:${conn.port}/api/calld/1.0/applications/${application_uuid}/nodes`;
-          const nodeCreated = await createNodeAddCall(url, token, call_id);
+      const applicationUuid = getNodeParameter(RED, node, msg, config.applicationUuid, config.applicationUuidType) || msg.payload.application_uuid;
+      const callId = getNodeParameter(RED, node, msg, config.callUuid, config.callUuidType) || msg.payload.call.id || msg.payload.call_id;
+  
+      if (checkType(RED, node, callId, "string") && checkType(RED, node, applicationUuid, "string")) {
+        
+        try{
+          const token = await conn.authenticate();
+          const url = `https://${conn.host}:${conn.port}/api/calld/1.0/applications/${applicationUuid}/nodes`;
+          const nodeCreated = await createNodeAddCall(url, token, callId);
           node.log(`Add call to node ${nodeCreated.uuid}`);
-          msg.payload.call_id = call_id;
-          msg.payload.application_uuid = application_uuid;
+          setStatus(node, `Last created: ${nodeCreated.uuid}`, "green", "dot");
+          msg.payload.call_id = callId;
+          msg.payload.application_uuid = applicationUuid;
           msg.payload.node_uuid = nodeCreated.uuid;
-          msg.payload.data = nodeCreated;
+          msg.payload.node_created = nodeCreated;
           node.send(msg);
-        }
-        catch(err) {
+
+        } catch(err) {
+          setErrorStatus(node, "Node could not be created, check inputs")    
           node.error(err);
           throw err;
         }
       }
+      done();
     });
-
   }
 
   // FIXME: Remove when SDK will be ready

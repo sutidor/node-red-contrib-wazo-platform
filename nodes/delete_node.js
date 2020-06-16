@@ -30,10 +30,9 @@ module.exports = function (RED) {
           setErrorStatus(node, "Node could not be deleted, check inputs")    
           node.error(err);
           throw err;
-        }   
-
-        done();      
+        }       
       }
+      done();
     });
   }
 

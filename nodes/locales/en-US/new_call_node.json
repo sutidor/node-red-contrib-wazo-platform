@@ -1,0 +1,15 @@
+{
+    "new_call_node": {
+        "label": {
+            "name": "Name",
+            "applicationUuid": "Application UUID",
+            "nodeUuid": "Node UUID",
+            "exten": "Extension",
+            "context": "Context",
+            "autoAnswer": "AutoAnswer"
+        },
+        "errors": {
+            "falsetype": "Input is not of type "
+        }
+    }
+}
