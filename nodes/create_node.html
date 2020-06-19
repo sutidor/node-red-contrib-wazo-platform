@@ -3,16 +3,35 @@
     category: 'Wazo CP',
     color: '#C0DEED',
     defaults: {
-      server: {type: "wazo config", required: true}
+      server: { 
+        type: "wazo config", 
+        required: true 
+      },
+      applicationUuid: {
+        value: '',
+        required: false
+      },
+      applicationUuidType: {
+        value: 'msg',
+        required: true
+      },
+      callUuid: {
+        value: '',
+        required: false
+      },
+      callUuidType: {
+        value: 'msg',
+        required: true
+      },
     },
-    inputs:1,
-    outputs:1,
+    inputs: 1,
+    outputs: 1,
     icon: "wazo.png",
     label: "create node",
     paletteLabel: "create node",
-    oneditprepare: function() {
-            appendInputType("applicationUuid");
-            appendInputType("callUuid");
+    oneditprepare: function () {
+      appendInputType("applicationUuid");
+      appendInputType("callUuid");
     }
   });
 </script>

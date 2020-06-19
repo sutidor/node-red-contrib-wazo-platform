@@ -28,8 +28,8 @@ module.exports = function (RED) {
           msg.payload.call_id = new_call_node.uuid;
           msg.payload.new_call_node = new_call_node;
           node.send(msg);
-        }
-        catch(err) {
+
+        } catch(err) {
           setErrorStatus(node, "Call could not be started, check inputs")    
           node.error(err);
           throw err;

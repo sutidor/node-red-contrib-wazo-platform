@@ -1,6 +1,8 @@
 module.exports = function (RED) {
     
   function stop_progress(config) {
+    const { setStatus, checkType, setErrorStatus, getNodeParameter } = require('./lib/helpers');
+    
     RED.nodes.createNode(this, config);
     conn = RED.nodes.getNode(config.server);
     this.client = conn.client.application;

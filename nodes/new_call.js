@@ -1,4 +1,5 @@
 module.exports = function (RED) {
+  const { setStatus, checkType, setErrorStatus, getNodeParameter } = require('./lib/helpers');
   const { WazoApiClient } = require('@wazo/sdk');
   const fetch = require('node-fetch');
   const https = require("https");

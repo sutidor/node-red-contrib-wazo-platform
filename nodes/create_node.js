@@ -30,6 +30,9 @@ module.exports = function (RED) {
           const token = await conn.authenticate();
           const url = `https://${conn.host}:${conn.port}/api/calld/1.0/applications/${applicationUuid}/nodes`;
           const nodeCreated = await createNodeAddCall(url, token, callId);
+          console.log(nodeCreated),
+          console.log(applicationUuid)
+          console.log(callId)
           node.log(`Add call to node ${nodeCreated.uuid}`);
           setStatus(node, `Last created: ${nodeCreated.uuid}`, "green", "dot");
           msg.payload.call_id = callId;
