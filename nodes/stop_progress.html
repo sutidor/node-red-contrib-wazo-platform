@@ -3,7 +3,26 @@
     category: 'Wazo CP',
     color: '#FFAAAA',
     defaults: {
-      server: {type: "wazo config", required: true}
+      server: {
+        type: "wazo config", 
+        required: true
+      },
+      applicationUuid:  {
+        value: '',
+        required: false
+      },
+      applicationUuidType: {
+        value: 'msg',
+        required: true
+      },
+      callUuid:  {
+        value: '',
+        required: false
+      },
+      callUuidType: {
+        value: 'msg',
+        required: true
+      },
     },
     inputs: 1,
     outputs: 1,

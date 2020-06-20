@@ -3,7 +3,50 @@
     category: 'Wazo CP',
     color: '#C0DEED',
     defaults: {
-      server: {type: "wazo config", required: true}
+      server: {
+        type: "wazo config", 
+        required: true
+      },
+      applicationUuid:  {
+        value: '',
+        required: false
+      },
+      applicationUuidType: {
+        value: 'msg',
+        required: true
+      },
+      nodeUuid:  {
+        value: '',
+        required: false
+      },
+      nodeUuidType: {
+        value: 'msg',
+        required: true
+      },
+      exten:  {
+        value: '',
+        required: false
+      },
+      extenType: {
+        value: 'msg',
+        required: true
+      },
+      context:  {
+        value: '',
+        required: false
+      },
+      contextType: {
+        value: 'msg',
+        required: true
+      },
+      autoAnswer:  {
+        value: '',
+        required: false
+      },
+      autoAnswerType: {
+        value: 'msg',
+        required: true
+      },
     },
     inputs:1,
     outputs:1,
