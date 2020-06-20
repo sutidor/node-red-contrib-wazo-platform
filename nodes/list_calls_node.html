@@ -3,13 +3,36 @@
     category: 'Wazo CP',
     color: '#C0DEED',
     defaults: {
-      server: {type: "wazo config", required: true}
+      server: {
+        type: "wazo config", 
+        required: true
+      },
+      applicationUuid:  {
+        value: '',
+        required: false
+      },
+      applicationUuidType: {
+        value: 'msg',
+        required: true
+      },
+      nodeUuid:  {
+        value: '',
+        required: false
+      },
+      nodeUuidType: {
+        value: 'msg',
+        required: true
+      },
     },
     inputs:1,
     outputs:1,
     icon: "wazo.png",
     label: "list calls node",
-    paletteLabel: "list calls"
+    paletteLabel: "list calls",
+    oneditprepare: function() {
+            appendInputType("applicationUuid");
+            appendInputType("nodeUuid");
+    }
   });
 </script>
 
@@ -17,6 +40,16 @@
   <div class="form-row">
     <label for="node-config-input-server"><i class="fa fa-globe"></i> Server</label>
     <input type="text" id="node-input-server">
+  </div>
+  <div class="form-row">
+    <label for="node-input-applicationUuid"><i class="fa fa-play"></i> <span data-i18n="list_calls_node.label.applicationUuid"></span></label>
+    <input type="text" id="node-input-applicationUuid" data-i18n="[placeholder]list_calls_node.label.applicationUuid" style="width: 300px;">
+    <input type="hidden" id="node-input-applicationUuidType">
+  </div>
+  <div class="form-row">
+     <label for="node-input-nodeUuid"><i class="fa fa-play"></i> <span data-i18n="list_calls_node.label.nodeUuid"></span></label>
+     <input type="text" id="node-input-nodeUuid" data-i18n="[placeholder]list_calls_node.label.nodeUuid" style="width: 300px;">
+     <input type="hidden" id="node-input-nodeUuidType">
   </div>
 </script>
 

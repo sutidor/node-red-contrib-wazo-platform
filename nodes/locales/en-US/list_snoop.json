@@ -1,0 +1,11 @@
+{
+    "list_snoop": {
+        "label": {
+            "name": "Name",
+            "applicationUuid": "Application UUID"
+        },
+        "errors": {
+            "falsetype": "Input is not of type "
+        }
+    }
+}

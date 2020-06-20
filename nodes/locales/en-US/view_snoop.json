@@ -1,0 +1,12 @@
+{
+    "view_snoop": {
+        "label": {
+            "name": "Name",
+            "applicationUuid": "Application UUID",
+            "snoopUuid": "Snoop UUID"
+        },
+        "errors": {
+            "falsetype": "Input is not of type "
+        }
+    }
+}

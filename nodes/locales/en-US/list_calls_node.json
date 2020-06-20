@@ -1,0 +1,12 @@
+{
+    "list_calls_node": {
+        "label": {
+            "name": "Name",
+            "applicationUuid": "Application UUID",
+            "nodeUuid": "Node UUID"
+        },
+        "errors": {
+            "falsetype": "Input is not of type "
+        }
+    }
+}

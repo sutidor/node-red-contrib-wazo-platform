@@ -1,31 +1,37 @@
 module.exports = function (RED) {
+  const { setStatus, checkType, setErrorStatus, getNodeParameter } = require('./lib/helpers');
   const { WazoApiClient } = require('@wazo/sdk');
 
-  function list_calls_node(n) {
-    RED.nodes.createNode(this, n);
-    conn = RED.nodes.getNode(n.server);
+  function list_calls_node(config) {
+    RED.nodes.createNode(this, config);
+    conn = RED.nodes.getNode(config.server);
     this.client = conn.client.application;
 
-    var node = this;
+    let node = this;
+    setStatus(node);
 
-    node.on('input', async msg => {
-      node_uuid = msg.payload.node ? msg.payload.node.uuid : msg.payload.node_uuid;
-      application_uuid = msg.payload.application_uuid;
+    node.on('input', async (msg, send, done) => {
+      const applicationUuid = getNodeParameter(RED, node, msg, config.applicationUuid, config.applicationUuidType) || msg.payload.application_uuid;
+      const nodeUuid = getNodeParameter(RED, node, msg, config.nodeUuid, config.nodeUuidType) || msg.payload.node_uuid || msg.payload.uuid;
 
-      if (node_uuid && application_uuid) {
-        try {
-          const callsNode = await node.client.listCallsNodes(application_uuid, node_uuid);
-          node.log(`List calls node ${node_uuid}`);
-          msg.payload.application_uuid = application_uuid;
-          msg.payload.node_uuid = node_uuid;
-          msg.payload.data = callsNode;
+      if (checkType(RED, node, nodeUuid, "string") && checkType(RED, node, applicationUuid, "string")) {
+        node.log(`Listing calls of node ${nodeUuid} in application ${applicationUuid}`);
+        try {  
+          const callsOfNode = await node.client.listCallsNodes(applicationUuid, nodeUuid);
+
+          setStatus(node, `Last nodes calls listed: ${nodeUuid}`, "green", "dot");
+          msg.payload.application_uuid = applicationUuid;
+          msg.payload.node_uuid = nodeUuid;
+          msg.payload.callsOfNNode = callsOfNode;
           node.send(msg);
         }
         catch(err) {
+          setErrorStatus(node, "Calls of node could not be listed, check inputs")    
           node.error(err);
           throw err;
-        }
+        }        
       }
+      done();
     });
 
   }

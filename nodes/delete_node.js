@@ -1,5 +1,6 @@
 module.exports = function (RED) {
   const { setStatus, checkType, setErrorStatus, getNodeParameter } = require('./lib/helpers');
+  const { WazoApiClient } = require('@wazo/sdk');
 
   function delete_node(config) {
     RED.nodes.createNode(this, config);

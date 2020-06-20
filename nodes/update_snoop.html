@@ -3,13 +3,45 @@
     category: 'Wazo CP',
     color: '#C0DEED',
     defaults: {
-      server: {type: "wazo config", required: true}
+      server: {
+        type: "wazo config", 
+        required: true
+      },
+      applicationUuid:  {
+        value: '',
+        required: false
+      },
+      applicationUuidType: {
+        value: 'msg',
+        required: true
+      },
+      snoopUuid:  {
+        value: '',
+        required: false
+      },
+      snoopUuidType: {
+        value: 'msg',
+        required: true
+      },
+      whisperMode:  {
+        value: '',
+        required: false
+      },
+      whisperMode: {
+        value: 'msg',
+        required: true
+      },
     },
     inputs:1,
     outputs:1,
     icon: "wazo.png",
     label: "update snoop",
-    paletteLabel: "update snoop"
+    paletteLabel: "update snoop",
+    oneditprepare: function() { 
+            appendInputType("applicationUuid");
+            appendInputType("snoopUuid");
+            appendInputType("whisperMode")
+    }
   });
 </script>
 
@@ -17,6 +49,21 @@
   <div class="form-row">
     <label for="node-config-input-server"><i class="fa fa-globe"></i> Server</label>
     <input type="text" id="node-input-server">
+  </div>
+  <div class="form-row">
+    <label for="node-input-applicationUuid"><i class="fa fa-play"></i> <span data-i18n="update_snoop.label.applicationUuid"></span></label>
+    <input type="text" id="node-input-applicationUuid" data-i18n="[placeholder]update_snoop.label.applicationUuid" style="width: 300px;">
+    <input type="hidden" id="node-input-applicationUuidType">
+  </div>
+  <div class="form-row">
+    <label for="node-input-snoopUuid"><i class="fa fa-play"></i> <span data-i18n="update_snoop.label.snoopUuid"></span></label>
+    <input type="text" id="node-input-snoopUuid" data-i18n="[placeholder]update_snoop.label.snoopUuid" style="width: 300px;">
+    <input type="hidden" id="node-input-snoopUuidType">
+  </div>
+  <div class="form-row">
+    <label for="node-input-whisperMode"><i class="fa fa-play"></i> <span data-i18n="update_snoop.label.whisperMode"></span></label>
+    <input type="text" id="node-input-whisperMode" data-i18n="[placeholder]update_snoop.label.whisperMode" style="width: 300px;">
+    <input type="hidden" id="node-input-whisperModeType">
   </div>
 </script>
 

@@ -1,0 +1,14 @@
+{
+    "create_snoop": {
+        "label": {
+            "name": "Name",
+            "applicationUuid": "Application UUID",
+            "callUuid": "Call UUID",
+            "snoopingCallUuid": "Snooping Call UUID",
+            "whisperMode": "Whisper Mode"
+        },
+        "errors": {
+            "falsetype": "Input is not of type "
+        }
+    }
+}

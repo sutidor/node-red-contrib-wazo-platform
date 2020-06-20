@@ -3,13 +3,54 @@
     category: 'Wazo CP',
     color: '#C0DEED',
     defaults: {
-      server: {type: "wazo config", required: true}
+      server: {
+        type: "wazo config", 
+        required: true
+      },
+      applicationUuid:  {
+        value: '',
+        required: false
+      },
+      applicationUuidType: {
+        value: 'msg',
+        required: true
+      },
+      callUuid:  {
+        value: '',
+        required: false
+      },
+      callUuidType: {
+        value: 'msg',
+        required: true
+      },
+      snoopingCallUuid:  {
+        value: '',
+        required: false
+      },
+      snoopingCallUuidType: {
+        value: 'msg',
+        required: true
+      },
+      whisperMode:  {
+        value: '',
+        required: false
+      },
+      whisperModeType: {
+        value: 'msg',
+        required: true
+      },
     },
     inputs:1,
     outputs:1,
     icon: "wazo.png",
     label: "create snoop",
-    paletteLabel: "create snoop"
+    paletteLabel: "create snoop",
+    oneditprepare: function() { 
+            appendInputType("applicationUuid");
+            appendInputType("callUuid");
+            appendInputType("snoopingCallUuid");
+            appendInputType("whisperMode");
+    }
   });
 </script>
 
@@ -17,6 +58,26 @@
   <div class="form-row">
     <label for="node-config-input-server"><i class="fa fa-globe"></i> Server</label>
     <input type="text" id="node-input-server">
+  </div>
+  <div class="form-row">
+    <label for="node-input-applicationUuid"><i class="fa fa-play"></i> <span data-i18n="create_snoop.label.applicationUuid"></span></label>
+    <input type="text" id="node-input-applicationUuid" data-i18n="[placeholder]create_snoop.label.applicationUuid" style="width: 300px;">
+    <input type="hidden" id="node-input-applicationUuidType">
+  </div>
+  <div class="form-row">
+    <label for="node-input-callUuid"><i class="fa fa-play"></i> <span data-i18n="create_snoop.label.callUuid"></span></label>
+    <input type="text" id="node-input-callUuid" data-i18n="[placeholder]create_snoop.label.callUuid" style="width: 300px;">
+    <input type="hidden" id="node-input-callUuidType">
+  </div>
+  <div class="form-row">
+    <label for="node-input-snoopingCallUuid"><i class="fa fa-play"></i> <span data-i18n="create_snoop.label.snoopingCallUuid"></span></label>
+    <input type="text" id="node-input-snoopingCallUuid" data-i18n="[placeholder]create_snoop.label.snoopingCallUuid" style="width: 300px;">
+    <input type="hidden" id="node-input-snoopingCallUuid">
+  </div>
+  <div class="form-row">
+    <label for="node-input-whisperMode"><i class="fa fa-play"></i> <span data-i18n="create_snoop.label.whisperMode"></span></label>
+    <input type="text" id="node-input-whisperMode" data-i18n="[placeholder]create_snoop.label.whisperMode" style="width: 300px;">
+    <input type="hidden" id="node-input-whisperModeType">
   </div>
 </script>
 

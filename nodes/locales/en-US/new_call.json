@@ -6,9 +6,9 @@
             "nodeUuid": "Node UUID",
             "exten": "Extension",
             "context": "Context",
-            "autoAnswer": "AutoAnswer",
-            "displayedCallerIdName": "DisplayedCallerIdName",
-            "displayedCallerIdNumber": "DisplayedCallerIdNumber",
+            "autoAnswer": "Auto Answer", 
+            "displayedCallerIdName": "Displayed Caller Id Name",
+            "displayedCallerIdNumber": "Displayed Caller Id Number",
             "variables": "Variables"
         },
         "errors": {

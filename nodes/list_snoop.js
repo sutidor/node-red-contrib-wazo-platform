@@ -1,31 +1,35 @@
 module.exports = function (RED) {
+  const { setStatus, checkType, setErrorStatus, getNodeParameter } = require('./lib/helpers');
   const { WazoApiClient } = require('@wazo/sdk');
 
-  function list_snoop(n) {
-    RED.nodes.createNode(this, n);
-    conn = RED.nodes.getNode(n.server);
+  function list_snoop(config) {
+    RED.nodes.createNode(this, config);
+    conn = RED.nodes.getNode(config.server);
     this.client = conn.client.application;
 
-    var node = this;
+    let node = this;
+    setStatus(node);
 
-    node.on('input', async msg => {
-      application_uuid = msg.payload.application_uuid;
+    node.on('input', async (msg, send, done) => {
+      const applicationUuid = getNodeParameter(RED, node, msg, config.applicationUuid, config.applicationUuidType) || msg.payload.application_uuid;
 
-      if (application_uuid) {
+      if (checkType(RED, node, applicationUuid, "string")) {
+        node.log('List snoop');
         try {
-          const snoopNode = await node.client.listSnoop(application_uuid);
-          node.log('List snoop');
-          msg.payload.application_uuid = application_uuid;
-          msg.payload.snoop_uuid = snoopNode.items[0].uuid;
-          msg.payload.whisper_mode = snoopNode.items[0].whisper_mode;
-          msg.payload.data = snoopNode;
+          const snoops = await node.client.listSnoop(application_uuid);
+
+          setStatus(node, `Last applications snoops listed: ${applicationUuid}`, "green", "dot");  
+          msg.payload.application_uuid = applicationUuid;
+          msg.payload.snoops = snoops;
           node.send(msg);
         }
         catch(err) {
+          setErrorStatus(node, "Snoops of application could not be listed, check inputs")    
           node.error(err);
           throw err;
         }
       }
+      done();
     });
 
   }
